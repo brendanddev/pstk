@@ -1,6 +1,6 @@
+# pkmnemerald-lib
 
-# pkmnemerald-lib   v0.0.1
-A C library for parsing, reading, and modifying Pokemon Emerald save files at the binary level.
+A work in progress C library for parsing, reading, and modifying Pokemon Emerald save files at the binary level.
 
 ---
 
