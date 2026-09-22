@@ -22,10 +22,9 @@ SaveFile *load_save(const char *filepath) {
     }
 
     // Read at most SAVE_SIZE bytes; extra emulator data is ignored.
-    save->size = fread(save->data, 1, SAVE_SIZE, file);
-
-    save->is_valid = (save->size == SAVE_SIZE)
-                  && verify_slot(save, current_slot(save));
+    save->size = fread(save->data, 1, SAVE_BUFFER_SIZE, file);
+    save->is_valid = (save->size >= SAVE_SIZE)
+                     && verify_slot(save, current_slot(save));
 
     fclose(file);
     return save;
@@ -67,8 +66,8 @@ int write_save(SaveFile *save, const char *filepath) {
     FILE *file = fopen(filepath, "wb");
     if (file == NULL) return 0;
 
-    size_t written = fwrite(save->data, 1, SAVE_SIZE, file);
+    size_t written = fwrite(save->data, 1, save->size, file);
     fclose(file);
 
-    return written == SAVE_SIZE;
+    return written == save->size;
 }

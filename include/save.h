@@ -7,10 +7,11 @@
 // Size of a GBA Emerald save: 128 KB of flash.
 // Emulators may append extra data, which is ignored.
 #define SAVE_SIZE 131072
+#define SAVE_BUFFER_SIZE (SAVE_SIZE + 16)
 
 // In-memory copy of a `.sav` file. Over 128 KB, so always heap allocate it.
 typedef struct SaveFile {
-    uint8_t data[SAVE_SIZE];   // Raw bytes of the save file
+    uint8_t data[SAVE_BUFFER_SIZE]; // Raw bytes of the save file
     size_t size;               // Number of bytes read
     int is_valid;              // Full size AND current slot's checksums all verify
 } SaveFile;
