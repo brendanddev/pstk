@@ -28,4 +28,8 @@ int current_slot(const SaveFile *save);
 // Returns the sector with the given footer ID in the current slot, or NULL.
 uint8_t *find_sector(SaveFile *save, uint16_t id);
 
+// Recomputes checksums for the current slot and writes the save to disk.
+// Returns 1 on success, 0 on failure (bad path, write error).
+int write_save(SaveFile *save, const char *filepath);
+
 #endif

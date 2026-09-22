@@ -29,4 +29,11 @@ uint16_t sector_checksum(const uint8_t *data, size_t size);
 // `position` is the sector's index in the file (0-31), not its footer ID.
 int verify_sector(const SaveFile *save, int position);
 
+// Mutable version of sector_at, for writing.
+uint8_t *sector_at_mut(SaveFile *save, int position);
+
+// Recomputes and rewrites the checksum in a sector's footer, based on its
+// current data. No-op if the sector's ID is invalid.
+void update_sector_checksum(SaveFile *save, int position);
+
 #endif

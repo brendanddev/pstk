@@ -54,3 +54,21 @@ uint8_t *find_sector(SaveFile *save, uint16_t id) {
     }
     return NULL;
 }
+
+int write_save(SaveFile *save, const char *filepath) {
+    int slot = current_slot(save);
+
+    // Recompute every sectors checksum in the current slot before writing.
+    // Sectors with no valid data are skipped.
+    for (int i = 0; i < SECTORS_PER_SLOT; i++) {
+        update_sector_checksum(save, slot * SECTORS_PER_SLOT + i);
+    }
+
+    FILE *file = fopen(filepath, "wb");
+    if (file == NULL) return 0;
+
+    size_t written = fwrite(save->data, 1, SAVE_SIZE, file);
+    fclose(file);
+
+    return written == SAVE_SIZE;
+}

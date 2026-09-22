@@ -12,7 +12,8 @@ int get_player_name(SaveFile *save, char out[9]) {
     if (sb2 == NULL) return 0;
 
     int n = 0;
-    for (int i = 0; i < 8 && sb2[i] != 0xFF; i++) {   // 0xFF terminates the name
+    // 0xFF terminates the name
+    for (int i = 0; i < 8 && sb2[i] != 0xFF; i++) {
         out[n++] = gen3_to_ascii(sb2[i]);
     }
     out[n] = '\0';
