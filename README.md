@@ -1,6 +1,6 @@
-# pkmnemerald-lib
+# pstk
 
-A work in progress C library for parsing, reading, and modifying Pokemon Emerald save files at the binary level.
+Pokémon Save ToolKit, a C library for reading and editing Pokémon save files. Currently supports Gen 3 (Emerald) (WIP).
 
 ---
 

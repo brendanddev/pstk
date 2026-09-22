@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "pkmnemerald.h"
+#include "pstk.h"
 
 int main(void) {
     SaveFile *save = load_save("saves/test.sav");
