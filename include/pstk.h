@@ -5,6 +5,7 @@
 #include "save.h"
 #include "player.h"
 #include "money.h"
+#include "bag.h"
 #include "debug.h"
 
 #endif

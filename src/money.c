@@ -1,18 +1,8 @@
 #include "money.h"
 #include "bytes.h"
 
-// SaveBlock2 (sector ID 0)
-#define SB2_ENCRYPTION_KEY_OFFSET 0xAC
 // SaveBlock 1
 #define SB1_MONEY_OFFSET          0x490
-
-// Returns 1 and writes the key on success, 0 if SaveBlock2 is missing.
-static int get_encryption_key(SaveFile *save, uint32_t *key) {
-    const uint8_t *sb2 = find_sector(save, 0);
-    if (sb2 == NULL) return 0;
-    *key = rd32(sb2 + SB2_ENCRYPTION_KEY_OFFSET);
-    return 1;
-}
 
 int get_money(SaveFile *save, uint32_t *out) {
     uint32_t key;

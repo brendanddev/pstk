@@ -5,6 +5,8 @@
 #include "bytes.h"
 
 #define SAVEBLOCK1_SIZE 15752
+// SaveBlock2 (sector ID 0)
+#define SB2_ENCRYPTION_KEY_OFFSET 0xAC
 
 // Returns the slot's save counter, or -1 if its first sector has no valid signature.
 static int64_t slot_counter(const SaveFile *save, int slot) {
@@ -84,4 +86,11 @@ uint8_t *sb1_ptr(SaveFile *save, size_t offset) {
     if (sec == NULL) return NULL;
 
     return sec + byte_in_sector;
+}
+
+int get_encryption_key(SaveFile *save, uint32_t *key) {
+    const uint8_t *sb2 = find_sector(save, 0);
+    if (sb2 == NULL) return 0;
+    *key = rd32(sb2 + SB2_ENCRYPTION_KEY_OFFSET);
+    return 1;
 }

@@ -13,8 +13,8 @@
 // In-memory copy of a `.sav` file. Over 128 KB, so always heap allocate it.
 typedef struct SaveFile {
     uint8_t data[SAVE_BUFFER_SIZE]; // Raw bytes of the save file
-    size_t size;               // Number of bytes read
-    int is_valid;              // Full size AND current slot's checksums all verify
+    size_t size;                    // Number of bytes read
+    int is_valid;                   // Full size AND current slot's checksums all verify
 } SaveFile;
 
 // Loads a `.sav` file into a newly allocated SaveFile. Returns NULL on failure.
@@ -39,5 +39,9 @@ int write_save(SaveFile *save, const char *filepath);
 // up to (SAVEBLOCK1_CHUNK_SIZE - offset % SAVEBLOCK1_CHUNK_SIZE) contiguous
 // bytes without crossing into the next sector.
 uint8_t *sb1_ptr(SaveFile *save, size_t offset);
+
+// Reads SaveBlock2.encryptionKey (used by money, coins, and bag quantities).
+// Returns 1 on success, 0 if SaveBlock2 is missing.
+int get_encryption_key(SaveFile *save, uint32_t *key);
 
 #endif

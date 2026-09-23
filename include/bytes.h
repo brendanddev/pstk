@@ -16,6 +16,11 @@ static inline uint32_t rd32(const uint8_t *p) {
         | ((uint32_t)p[3] << 24);
 }
 
+static inline void wr16(uint8_t *p, uint16_t v) {
+    p[0] = (uint8_t)(v);
+    p[1] = (uint8_t)(v >> 8);
+}
+
 static inline void wr32(uint8_t *p, uint32_t v) {
     p[0] = (uint8_t)(v);
     p[1] = (uint8_t)(v >> 8);
