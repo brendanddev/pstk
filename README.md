@@ -1,23 +1,31 @@
 # pstk
 
-Pokémon Save ToolKit, a C library for reading and editing Pokémon save files. Currently supports Gen 3 (Emerald) (WIP).
+Pokémon Save ToolKit, a C library for reading and editing Pokémon save files. Currently supports Gen 3 (Emerald). Work in progress.
+
+---
+
+## Supported Features
+
+### Save File I/O
+- Load a `.sav` file from disk
+- Validate the save file (size, sector signatures, checksums)
+- Verify and recalculate sector checksums
+- Select the current save slot (of the two the game alternates between)
+- Write a modified save back to disk, recomputing checksums
+
+### Player Data
+- Read/write player name
+- Read player gender, trainer ID, secret ID
+- Read/write playtime
+- Read/write money (handles Emerald's XOR encryption)
+
+### Debugging
+- Print every sector's footer info and checksum status
+- Hex-dump a sector's contents
 
 ---
 
 ## Planned Features
-
-### Save File I/O
-- Load a `.sav` file from disk
-- Validate the save file (correct size and structure)
-- Verify and recalculate the checksum
-- Write the modified save back to disk
-
-### Player Data
-- Read/write player name
-- Read/write money
-- Read/write playtime
-- Read/write badges
-- Read/write gender
 
 ### Pokemon
 - Read/write party Pokemon (up to 6)
