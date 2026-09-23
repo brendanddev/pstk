@@ -4,6 +4,8 @@
 #include "sector.h"
 #include "bytes.h"
 
+#define SAVEBLOCK1_SIZE 15752
+
 // Returns the slot's save counter, or -1 if its first sector has no valid signature.
 static int64_t slot_counter(const SaveFile *save, int slot) {
     const uint8_t *sec = sector_at(save, slot * SECTORS_PER_SLOT);
@@ -70,4 +72,16 @@ int write_save(SaveFile *save, const char *filepath) {
     fclose(file);
 
     return written == save->size;
+}
+
+uint8_t *sb1_ptr(SaveFile *save, size_t offset) {
+    if (offset >= SAVEBLOCK1_SIZE) return NULL;
+
+    uint16_t sector_id = (uint16_t)(1 + offset / SAVEBLOCK1_CHUNK_SIZE);
+    size_t byte_in_sector = offset % SAVEBLOCK1_CHUNK_SIZE;
+
+    uint8_t *sec = find_sector(save, sector_id);
+    if (sec == NULL) return NULL;
+
+    return sec + byte_in_sector;
 }
