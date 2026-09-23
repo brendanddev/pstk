@@ -21,6 +21,20 @@ int main(void) {
         printf("Money: %u\n", money);
     }
 
+    uint16_t coins;
+    if (get_coins(save, &coins)) {
+        printf("Coins: %u\n", coins);
+    }
+
+    uint8_t badges;
+    if (get_badges(save, &badges)) {
+        printf("Badges: 0x%02X (", badges);
+        for (int n = 1; n <= NUM_BADGES; n++) {
+            printf("%d", (badges >> (n - 1)) & 1);
+        }
+        printf(")\n");
+    }
+
     for (int p = 0; p < POCKET_COUNT; p++) {
         printf("-- %s --\n", POCKET_NAMES[p]);
         int cap = pocket_capacity((Pocket)p);
@@ -60,6 +74,13 @@ int main(void) {
         printf("Failed to clear slot 1\n");
     }
 
+    if (set_badge(save, 4, 1)) {
+        printf("Set badge 4\n");
+    }
+    if (set_coins(save, 500)) {
+        printf("Set coins to 500\n");
+    }
+
     if (write_save(save, "saves/test_write.sav")) {
         printf("Wrote bag changes to saves/test_write.sav\n");
     } else {
@@ -79,7 +100,7 @@ int main(void) {
         ItemSlot check1;
         if (bag_get_slot(save, POCKET_ITEMS, 1, &check1)) {
             printf("Reloaded slot 1: id=%u qty=%u (should be id=0 qty=0)\n",
-                   check1.id, check1.quantity);
+                check1.id, check1.quantity);
         }
 
         uint32_t key2;
@@ -87,7 +108,17 @@ int main(void) {
             uint8_t *raw_slot1 = sb1_ptr(save, 0x560 + 1 * 4);
             uint16_t raw_qty1 = rd16(raw_slot1 + 2);
             printf("Slot 1 raw qty = %04X, expected = %04X, match = %d\n",
-                   raw_qty1, (uint16_t)key2, raw_qty1 == (uint16_t)key2);
+                raw_qty1, (uint16_t)key2, raw_qty1 == (uint16_t)key2);
+        }
+
+        int badge4;
+        if (get_badge(save, 4, &badge4)) {
+            printf("Reloaded badge 4: %d\n", badge4);
+        }
+
+        uint16_t coins2;
+        if (get_coins(save, &coins2)) {
+            printf("Reloaded coins: %u\n", coins2);
         }
     }
 

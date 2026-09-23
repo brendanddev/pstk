@@ -6,6 +6,9 @@
 #include "player.h"
 #include "money.h"
 #include "bag.h"
+#include "flags.h"
+#include "badges.h"
+#include "coins.h"
 #include "debug.h"
 
 #endif
